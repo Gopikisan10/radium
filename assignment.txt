@@ -1,0 +1,66 @@
+Assignment 
+
+gopi@gopi-ThinkPad-X120e:~$ ls
+Desktop    Downloads  Music     Public  Templates
+Documents  Gopi       Pictures  snap    Videos
+gopi@gopi-ThinkPad-X120e:~$ mkdir assignment
+gopi@gopi-ThinkPad-X120e:~$ ls
+assignment  Documents  Gopi   Pictures  snap       Videos
+Desktop     Downloads  Music  Public    Templates
+gopi@gopi-ThinkPad-X120e:~$ cd assignment/
+gopi@gopi-ThinkPad-X120e:~/assignment$ mkdir source
+gopi@gopi-ThinkPad-X120e:~/assignment$ mkdir destination
+gopi@gopi-ThinkPad-X120e:~/assignment$ ls
+destination  source
+gopi@gopi-ThinkPad-X120e:~/assignment$ cd source
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ touch ubuntu.txt
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ ls
+ubuntu.txt
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ vim
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ vim ubuntu.txt 
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ ls
+ubuntu.txt
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ cp ubuntu.txt destination
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ ls
+destination  ubuntu.txt
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ rm destination 
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ ls
+ubuntu.txt
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ cp ubuntu.txt /assignment/destination
+cp: cannot create regular file '/assignment/destination': No such file or directory
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ cd ..
+gopi@gopi-ThinkPad-X120e:~/assignment$ cp source/ubuntu.txt destination
+gopi@gopi-ThinkPad-X120e:~/assignment$ ls
+destination  source
+gopi@gopi-ThinkPad-X120e:~/assignment$ cd destination/
+gopi@gopi-ThinkPad-X120e:~/assignment/destination$ ls
+ubuntu.txt
+gopi@gopi-ThinkPad-X120e:~/assignment/destination$ rm ubuntu.txt 
+gopi@gopi-ThinkPad-X120e:~/assignment/destination$ ls
+gopi@gopi-ThinkPad-X120e:~/assignment/destination$ cd ..
+gopi@gopi-ThinkPad-X120e:~/assignment$ ls
+destination  source
+gopi@gopi-ThinkPad-X120e:~/assignment$ cd source/
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ ls
+ubuntu.txt
+gopi@gopi-ThinkPad-X120e:~/assignment/source$ cd ..
+gopi@gopi-ThinkPad-X120e:~/assignment$ mv source/ubuntu.txt destination/
+gopi@gopi-ThinkPad-X120e:~/assignment$ ls
+destination  source
+
+gopi@gopi-ThinkPad-X120e:~/assignment$ destination/
+bash: destination/: Is a directory
+gopi@gopi-ThinkPad-X120e:~/assignment$ ls
+destination  source
+gopi@gopi-ThinkPad-X120e:~/assignment$ cd destination/
+gopi@gopi-ThinkPad-X120e:~/assignment/destination$ ls
+ubuntu.txt
+gopi@gopi-ThinkPad-X120e:~/assignment/destination$ vim ubuntu.txt 
+gopi@gopi-ThinkPad-X120e:~/assignment/destination$ grep "bootcamp" ubuntu.txt 
+Function up bootcamp enhance my skill.
+Function Up is a bootcamp where i learn alot of skills
+Function up is indias no 1 placement bootcamp
+gopi@gopi-ThinkPad-X120e:~/assignment/destination$ grep "Function up" ubuntu.txt 
+Function up bootcamp enhance my skill.
+Function up is indias no 1 placement bootcamp
+gopi@gopi-ThinkPad-X120e:~/assignment/destination$ 
