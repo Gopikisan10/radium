@@ -51,19 +51,19 @@ const getBooksData= async function (req, res) {
 
         // REGULAR EXPRESSIONS(regex) : 
 
-        // let allBooks= await BookModel.find( {  bookName: /.*Node.*/i   } ) //has the word Node 
+        // let allBooks= await BookModel.find( {  bookName: /.Node./i   } ) //has the word Node 
         // let allBooks= await BookModel.find( {  bookName: /Node$/i   } ) //ends with Node
         // let allBooks= await BookModel.find( {  bookName: /^Intro/i   } ) //starts with Node
 
-        let a=5
-        let b=6
-        let c=  a+b
-        console.log(c)
+        // let a=5
+        // let b=6
+        // let c=  a+b
+        // console.log(c)
 
 
 
         
-        let allBooks= await BookModel.find( { "prices.europeanPrice" : "4Pounds"} ) // without await, this line will start to get executed..but the server will move to next line without COMPLETING the execution..this might cause code to break in the next few lines
+        // let allBooks= await BookModel.find( { "prices.europeanPrice" : "4Pounds"} ) // without await, this line will start to get executed..but the server will move to next line without COMPLETING the execution..this might cause code to break in the next few lines
         // hence we use await to ask the program to wait for the completion of this line..till this line completes, execution wont move to next line
 
         // await is typically used at 2 places:
@@ -75,6 +75,59 @@ const getBooksData= async function (req, res) {
 
         res.send({msg: allBooks})        
     }
+
+
+//ASSIGNMENT ON CREATING BOOK AND ACCESSING IT
+
+//createbook
+const createBooks = async function(req,res){
+    const book = req.body
+    let savedBook= await BookModel.create(book)
+    res.send({msg: savedBook})
+}
+
+//BookList
+const getbook = async function(req,res){
+    let allBook= await BookModel.find().select({ bookName:1, authorname:1})
+    res.send({msg: allBook})
+}
+
+//GetBookInYear
+const getbookinyear = async function(req,res){
+    let bookyear = await BookModel.find({year:req.body.year})
+    res.send({msg:bookyear})
+}
+
+//GetPerticularBook
+ const getPerticularbook = async function(req,res){
+     let perticularbook = await BookModel.find(req.body)
+     res.send({msg:perticularbook})
+ }
+
+
+//getXINRBook
+const getINRbook= async function(req,res){
+    let inrbook= await BookModel.find({ 'prices.indianPrice' : {$in: ["1200 rs","1000 rs"] } })
+    res.send({msg:inrbook})
+}
+
+
+//getRandomBook
+
+const getrandombook = async function(req,res){
+    let randombook= await BookModel.find({ $or: [ {stockAvailable: true} , { totalPages: {$gt: 500} }   ] } )
+    res.send({msg:randombook})
+}
+
+
+module.exports.createBooks = createBooks
+module.exports.getbook = getbook
+module.exports.getbookinyear = getbookinyear
+module.exports.getPerticularbook = getPerticularbook
+module.exports.getINRbook = getINRbook
+module.exports.getrandombook = getrandombook
+
+//---------------------------------------------------------------------------------------------------------
 
 module.exports.createBook= createBook
 module.exports.getBooksData= getBooksData
