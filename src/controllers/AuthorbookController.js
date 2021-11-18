@@ -30,7 +30,6 @@ const findauthorname= async function (req, res) {
 
 const findbook= async function (req, res) {
    let allUsers= await Newbook.find({$and:[{price:{$gte:50}},{price:{$lte:100}}]}).select({author_id: 1, _id:0})
-   console.log(allUsers)
     let savedata= await Author.find({$or:allUsers}).select({author_name: 1, author_id: 1, age: 1, address:1, _id:0})
     res.send({msg: savedata})    
 }
