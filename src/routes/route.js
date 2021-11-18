@@ -1,37 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const UserModel= require("../models/userModel")
 
-const UserController= require("../controllers/userController")
-const BookController= require("../controllers/bookController")
-const AssignmentBookController= require("../controllers/assignmentBookController")
+
+const NewBookModel= require("../models/newBookModel")
+const NewBookController= require("../controllers/newBookController")
+const AuthorModel= require("../models/authorModel")
+const AuthorController= require("../controllers/authorController")
+
+
 
 
 router.get('/test-me', function (req, res) {
     res.send('My first ever api!')
 });
 
-router.post('/createUser',  UserController.createUser  );
-router.get('/getAllUsers',  UserController.getUsersData  );
-
-router.post('/createBook',  BookController.createBook  );
-router.get('/getAllBooks',  BookController.getBooksData  );
-
-// mongo session 3: session/schema-basic3
-router.get('/getFirstBook',  BookController.getBook  );
-router.post('/updateBooks',  BookController.updateBooks  );
-
-router.post('/deleteBook',  BookController.deleteBook  );
 
 
-// Previous Day asignment API's
-router.post('/createBook',  AssignmentBookController.createBook  );
-router.get('/bookList',  AssignmentBookController.allBooksList  );
-router.post('/getParticularBooks',  AssignmentBookController.particularBooks  );
- router.post('/getBooksInYear',AssignmentBookController.yearDetails);
-router.get('/getXINRBooks',  AssignmentBookController.priceDetails  );
-router.get('/getRandomBooks', AssignmentBookController.randomBooks  );
+// W5D2
 
+router.post('/createnewbook',  NewBookController.createnewbook  );
+router.post('/createauthor',  AuthorController.createauthor);
+router.get('/findnewbook', NewBookController.findnewbook)
+router.get('/changePrice', NewBookController.changePrice)
+router.get('/givenbook', NewBookController.givenbook)
 
-
-module.exports = router;
+module.exports = router;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
