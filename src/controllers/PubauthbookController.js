@@ -7,7 +7,6 @@ const createmyBook= async function (req, res) {
     var data= req.body
     let checkid= await MYAuthor.findById(data.author)
     let checkpid= await mypublisher.findById(data.publisher)
-    console.log(checkid,checkpid)
     if(checkid && checkpid){
     let savedData= await MYBook.create(data)
     res.send({msg: savedData}) 
