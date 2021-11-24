@@ -36,6 +36,7 @@ const mid = require("../Middleware/upomiddleware.js")
 const usercrad = require("../models/RegisteruserModels.js")
 
 const loginController = require("../controllers/logincontrollers.js")
+const loginCheckMiddleware = require("../Middleware/loginmiddleware.js")
 
 //================================end===================================
 // router.get('/test-me', function (req, res) {
@@ -74,14 +75,14 @@ const loginController = require("../controllers/logincontrollers.js")
 
 //=========================22-11-2021===================assmn==============
 
-router.post('/makeproduct', upoController.makeproduct);
-router.post('/makeuser', mid.generalmid,upoController.makeuser);
-router.post('/makeorder', mid.generalmid, upoController.makeorder);
+// router.post('/makeproduct', upoController.makeproduct);
+// router.post('/makeuser', mid.generalmid,upoController.makeuser);
+// router.post('/makeorder', mid.generalmid, upoController.makeorder);
 //===============================23-11-2021======================
 
-// router.post('/mAKEuser', loginController.mAKEuser);
-// router.post('/login', loginController.login);
-// router.post('/showlogin', loginController.showlogin);
-// router.put('/updateonuser', loginController.updateonuser);
+router.post('/mAKEuser', loginController.mAKEuser);
+router.post('/login', loginController.login);
+router.get('/users/:userId', loginCheckMiddleware.activityToken, loginController.showlogin);
+router.put('/user/:userId', loginCheckMiddleware.activityToken, loginController.updateonuser);
 
 module.exports = router;
