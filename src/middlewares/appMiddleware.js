@@ -1,18 +1,23 @@
-const validateAppType = function(req, res, next){
-    let appTypeHeader = req.headers['isfreeapp']
-    let isAppFree
-    if(!appTypeHeader) {
-        return res.send({message: 'Mandatory header missing'})
-    }
+const jwt = require("jsonwebtoken")
 
-    if(appTypeHeader === 'false') {
-        isAppFree = false
-    } else {
-        isAppFree = true
-    }
-    req.isFreeAppUser = isAppFree
+const tokenchecker = function(req,res,next){
 
-    next()
+ let token = req.headers["x-auth-token"]
+ if(token){
+     let verification =jwt.verify(token,"identify")
+     if(verification){
+         req.token = verification;
+         next()
+     }else{
+         res.send({msg:"token cant be verify"})
+     }
+ }else{
+     res.send({msg:"token header is missing"})
+ }
+
+
+
 }
 
-module.exports.validateAppType = validateAppType
+module.exports.tokenchecker = tokenchecker
+

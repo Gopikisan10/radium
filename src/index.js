@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", route);
 
 mongoose.connect(
-    "mongodb+srv://monty-python:SnYUEY4giV9rekw@functionup-backend-coho.0zpfv.mongodb.net/sabiha_db?retryWrites=true&w=majority",{ useNewUrlParser: true })
+    "mongodb+srv://user-open-to-all:hiPassword123@cluster0.xgk0k.mongodb.net/GopikisanRaut-DB?retryWrites=true&w=majority")
 	.then(() => console.log("mongodb running and connected"))
 	.catch((err) => console.log(err));
 
