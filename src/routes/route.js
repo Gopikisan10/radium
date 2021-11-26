@@ -39,6 +39,12 @@ const loginController = require("../controllers/logincontrollers.js")
 const loginCheckMiddleware = require("../Middleware/loginmiddleware.js")
 
 //================================end===================================
+
+//=========================25-11-2021===================================
+const weather = require("../controllers/weathercontroller.js")
+
+//================================end===================================
+
 // router.get('/test-me', function (req, res) {
 //     res.send('My first ever api!')
 // });
@@ -80,9 +86,15 @@ const loginCheckMiddleware = require("../Middleware/loginmiddleware.js")
 // router.post('/makeorder', mid.generalmid, upoController.makeorder);
 //===============================23-11-2021======================
 
-router.post('/mAKEuser', loginController.mAKEuser);
-router.post('/login', loginController.login);
-router.get('/users/:userId', loginCheckMiddleware.activityToken, loginController.showlogin);
-router.put('/user/:userId', loginCheckMiddleware.activityToken, loginController.updateonuser);
+// router.post('/mAKEuser', loginController.mAKEuser);
+// router.post('/login', loginController.login);
+// router.get('/users/:userId', loginCheckMiddleware.activityToken, loginController.showlogin);
+// router.put('/user/:userId', loginCheckMiddleware.activityToken, loginController.updateonuser);
+
+//====================================25-11-2021======================
+ router.get('/weatheroflondon', weather.weatheroflondon);
+ router.get('/londontmp', weather.londontmp);
+ router.get('/weatherofcities', weather.weatherofcities);
+
 
 module.exports = router;
