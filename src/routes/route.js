@@ -9,40 +9,47 @@ const router = express.Router();
 // const UserController= require("../controllers/userController")
 // const BookController= require("../controllers/BookController")
 //============================================================
-const Newbooks = require("../models/MybookModel.js")
-const Authors = require("../models/MyauthorModel.js")
+// const Newbooks = require("../models/MybookModel.js")
+// const Authors = require("../models/MyauthorModel.js")
 // const authorbookController= require("../controllers/AuthorbookController")
-const MyauthbookController = require("../controllers/myauthbookController.js")
+//const MyauthbookController = require("../controllers/myauthbookController.js")
 ////========================18-11-2021========assignment 2=======
 
-const MYBook = require("../models/mybook1Model.js")
-const MYAuthor = require("../models/myauthorMODEL1.js")
-const mypublisher = require("../models/mybook1Model.js")
+// const MYBook = require("../models/mybook1Model.js")
+// const MYAuthor = require("../models/myauthorMODEL1.js")
+// const mypublisher = require("../models/mybook1Model.js")
 
-const pabController = require("../controllers/PubauthbookController.js")
+// const pabController = require("../controllers/PubauthbookController.js")
 //============================assmn================22-11-2021==============
 
-const Userdoc = require("../models/UserdocumentModel.js")
-const Productdoc = require("../models/ProductdocumentModel.js")
-const Orderdoc = require("../models/OrderdocumentModel.js")
+// const Userdoc = require("../models/UserdocumentModel.js")
+// const Productdoc = require("../models/ProductdocumentModel.js")
+// const Orderdoc = require("../models/OrderdocumentModel.js")
 
-const upoController = require("../controllers/UPOcontroller.js")
+// const upoController = require("../controllers/UPOcontroller.js")
 
-const mid = require("../Middleware/upomiddleware.js")
+// const mid = require("../Middleware/upomiddleware.js")
 //==================================end============================
 
 //===================23-11-2021==========================================
 
-const usercrad = require("../models/RegisteruserModels.js")
+// const usercrad = require("../models/RegisteruserModels.js")
 
-const loginController = require("../controllers/logincontrollers.js")
-const loginCheckMiddleware = require("../Middleware/loginmiddleware.js")
+// const loginController = require("../controllers/logincontrollers.js")
+// const loginCheckMiddleware = require("../Middleware/loginmiddleware.js")
 
 //================================end===================================
 
 //=========================25-11-2021===================================
-const weather = require("../controllers/weathercontroller.js")
+//const weather = require("../controllers/weathercontroller.js")
 
+//================================end===================================
+
+//=========================26-11-2021===================================
+
+const coin = require("../models/coinModel.js")
+
+const coinController = require("../controllers/coincontroller.js")
 //================================end===================================
 
 // router.get('/test-me', function (req, res) {
@@ -92,9 +99,11 @@ const weather = require("../controllers/weathercontroller.js")
 // router.put('/user/:userId', loginCheckMiddleware.activityToken, loginController.updateonuser);
 
 //====================================25-11-2021======================
- router.get('/weatheroflondon', weather.weatheroflondon);
- router.get('/londontmp', weather.londontmp);
- router.get('/weatherofcities', weather.weatherofcities);
+//  router.get('/weatheroflondon', weather.weatheroflondon);
+//  router.get('/londontmp', weather.londontmp);
+//  router.get('/weatherofcities', weather.weatherofcities);
 
+//====================================26-11-2021======================
+router.get('/coinfetch', coinController.coinfetch );
 
 module.exports = router;
