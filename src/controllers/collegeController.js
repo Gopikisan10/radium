@@ -1,4 +1,6 @@
-const collegeModel = require("../models/collegeModel");
+const CollegeModel = require("../models/collegeModel");
+const internModel = require("../models/internModel");
+
 
 const isValid = function(value) {
     if(typeof value === 'undefined' || value === null) return false
@@ -38,7 +40,7 @@ const createCollege = async function (req, res) {
     }
     // Validation ends
     const collegeData = {name, fullName, logoLink}// to have only those fields into an object.
-    const savedCollege = await collegeModel.create(collegeData);
+    const savedCollege = await CollegeModel.create(collegeData);
 
     res.status(201).send({status: true, message: `College created successfully`, data: savedCollege});
 } catch (error) {
@@ -46,4 +48,35 @@ const createCollege = async function (req, res) {
 }
 }
 
+const getCollegeDetails = async function (req, res) {
+    try {
+        const filterQuery = { isDeleted: false }
+        const queryParam = req.query
+        if (!isValidRequestBody(queryParam)) {
+            return res.status(400).send({ status: false, msg: "No query param received" });
+        }
+        if (!isValid(queryParam.collegeName)) {
+            return res.status(400).send({ status: false, message: 'collegeName is required' })
+        }
+        const collegename = queryParam.collegeName
+        filterQuery['collegename'] = collegename
+       const college = await CollegeModel.findOne(filterQuery)
+        const { name, fullName, logoLink } = college;
+        const id = (college._id).toString()
+        const interests = await internModel.find({ collegeId: id }).select({ name: 1, _id: 1, email:1, mobile:1 })
+        const internfromcollege= {
+            name,
+            fullName,
+            logoLink,
+            interests: interests
+        }
+        res.status(201).send({ status: true, message: "College data found successfully", data: internfromcollege });
+    }
+    catch (error) {
+        res.status(500).send({ status: false, Errormsg: error.message })
+    }
+};
+
+
+module.exports.getCollegeDetails = getCollegeDetails;
 module.exports.createCollege = createCollege;

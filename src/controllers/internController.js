@@ -55,28 +55,4 @@ const createIntern = async function (req, res) {
     }
 };
 
-const getCollegeDetails = async function (req, res) {
-    try {
-        const filterQuery = { isDeleted: false }
-        const queryParam = req.query
-        if (!checkforbody(queryParam)) {
-            return res.status(400).send({ status: false, msg: "No query param received" });
-        }
-        if (!validDetail(queryParam.collegeName)) {
-            return res.status(400).send({ status: false, message: 'collegeName is required' })
-        }
-        const name = queryParam.collegeName
-            filterQuery['name'] = name
-        const college = await CollegeModel.findOne(filterQuery)   //.populate('collegeId')
-        console.log(college)
-        const a= await internModel.find().populate('collegeId')
-        console.log(a)
-        res.status(201).send({ status: true, message: "College data found successfully", data: a });
-    }
-    catch (error) {
-        res.status(500).send({ status: false, Errormsg: error.message })
-    }
-};
-
 module.exports.createIntern = createIntern;
-module.exports.getCollegeDetails=getCollegeDetails;
