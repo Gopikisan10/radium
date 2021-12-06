@@ -3,9 +3,9 @@ const internModel = require("../models/internModel");
 
 
 const isValid = function(value) {
-    if(typeof value === 'undefined' || value === null) return false
-    if(typeof value === 'string' && value.trim().length === 0) return false
-    return true;
+    if (typeof (value) === 'undefined' || typeof (value) === 'null') { return false } //if undefined or null occur rather than what we are expecting than this particular feild will be false.
+    if (value.trim().length == 0) { return false } //if user give spaces not any string eg:- "  " =>here this value is empty, only space is there so after trim if it becomes empty than false will be given. 
+    if (typeof (value) === 'string' && value.trim().length > 0) { return true } //to check only string is comming and after trim value should be their than only it will be true.
 }
 
 const isValidRequestBody = function(requestBody) {
@@ -46,24 +46,26 @@ const createCollege = async function (req, res) {
 } catch (error) {
     res.status(500).send({status: false, message: error.message});
 }
-}
+};
 
 const getCollegeDetails = async function (req, res) {
     try {
-        const filterQuery = { isDeleted: false }
-        const queryParam = req.query
-        if (!isValidRequestBody(queryParam)) {
+        if (!isValidRequestBody(req.query)) {
             return res.status(400).send({ status: false, msg: "No query param received" });
         }
-        if (!isValid(queryParam.collegeName)) {
+        if (!isValid(req.query.collegeName)) {
             return res.status(400).send({ status: false, message: 'collegeName is required' })
         }
-        const collegename = queryParam.collegeName
-        filterQuery['collegename'] = collegename
-       const college = await CollegeModel.findOne(filterQuery)
+       const college = await CollegeModel.findOne({name:req.query.collegeName, isDeleted:false})
+       if(!college){
+          return res.status(404).send({ status: false, message: 'No data found for this college' })
+       }
         const { name, fullName, logoLink } = college;
         const id = (college._id).toString()
         const interests = await internModel.find({ collegeId: id }).select({ name: 1, _id: 1, email:1, mobile:1 })
+        if(!interests){
+            return res.status(404).send({ status: false, message: "College data found successfully", data:"No student found who has appeared for Internship" })
+         }
         const internfromcollege= {
             name,
             fullName,
