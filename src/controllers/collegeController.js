@@ -38,7 +38,8 @@ const createCollege = async function (req, res) {
         res.status(400).send({status: false, message: 'Link is required'})
         return
     }
-    // Validation ends
+
+   // Validation ends
     const collegeData = {name, fullName, logoLink}// to have only those fields into an object.
     const savedCollege = await CollegeModel.create(collegeData);
 

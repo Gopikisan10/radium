@@ -25,5 +25,6 @@ const validateNumber = function (req, res, next) {
     }
 }
 
+
 module.exports.validateNumber = validateNumber
 module.exports.validateEmail = validateEmail
