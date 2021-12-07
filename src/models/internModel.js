@@ -16,14 +16,18 @@ const internSchema = new mongoose.Schema({
         type: String,
         required: 'Mobile number is Required',
         trim: true,
-        validator: function (mobile) {
-            return /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(mobile)
-        }, message: 'Please fill a valid mobile number', isAsync: false
+        // validator: function (mobile) {
+        //     return /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(mobile)
+        // }, message: 'Please fill a valid mobile number', isAsync: false
     },
     collegeId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'college',
         required: 'CollageId is Required'
-    }
+    },
+    isDeleted:{
+        type:Boolean,
+        default:false
+      }
 }, { timestamps: true })
 module.exports = mongoose.model('intern', internSchema)

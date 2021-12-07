@@ -1,11 +1,6 @@
 const internModel = require("../models/internModel");
 const CollegeModel = require("../models/collegeModel");
 
-const checkforbody = function (checkReqBody) {
-    let check = Object.keys(checkReqBody).length > 0; //Object.keys(objectname)=> gives array of keys. If we add .length than it will give length of keys.
-    return check; //check=> contain true or false depend upon req.body [if req.body=empty=>False] or [if req.body=something=>True]
-}
-
 const validDetail = function (value) {
     if (typeof (value) === 'undefined' || typeof (value) === 'null') { return false } //if undefined or null occur rather than what we are expecting than this particular feild will be false.
     if (value.trim().length == 0) { return false } //if user give spaces not any string eg:- "  " =>here this value is empty, only space is there so after trim if it becomes empty than false will be given. 
@@ -14,21 +9,12 @@ const validDetail = function (value) {
 
 const createIntern = async function (req, res) {
     try {
-        const checkReqBody = req.body;
-        if (!checkforbody(checkReqBody)) {
-            return res.status(400).send({ status: false, message: 'Please provide intern details' })
-        }
-
-        const { name, email, mobile, collegeName } = checkReqBody //object destructuring => becz it will be easy to use for checking perpuse now we can use "name" in place of req.body.name
+        const { name, email, mobile, collegeName } = req.body //object destructuring => becz it will be easy to use for checking perpuse now we can use "name" in place of req.body.name
         if (!validDetail(name)) {
             return res.status(400).send({ status: false, message: 'name is required' })
         }
-        if (!validDetail(email)) {
-            return res.status(400).send({ status: false, message: 'email is required' })
-        }
 
         const isEmailAlreadyUsed = await internModel.findOne({ email }); // {email: email} object shorthand property
-
         if (isEmailAlreadyUsed) {
             return res.status(400).send({ status: false, message: `${email} email address is already registered` })
         }
@@ -42,7 +28,7 @@ const createIntern = async function (req, res) {
 
         let findCollegeId = await CollegeModel.findOne({ name: collegeName });
         if (!findCollegeId) {
-            return res.status(404).send({ status: false, message: 'CollegeId not found from your CollegeName' })
+            return res.status(404).send({ status: false, message: 'College details not found from your CollegeName' })
         }
         const collegeId = findCollegeId._id
         let createIntern = { name, email, mobile, collegeId }; //this is done becz to have only those feild which passes the above criteria and put all those feild into a object.

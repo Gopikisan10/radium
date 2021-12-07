@@ -15,11 +15,6 @@ const isValidRequestBody = function(requestBody) {
 const createCollege = async function (req, res) {
     try {
         const requestBody = req.body;
-        if(!isValidRequestBody(requestBody)) {
-            res.status(400).send({status: false, message: 'Invalid request parameters. Please provide college details'})
-            return
-        }
-
      // Extract params
      const {name, fullName, logoLink} = requestBody; // Object destructuring requestBody=req.body for name we had to write req.body.name instead we are writing this
 
@@ -33,13 +28,7 @@ const createCollege = async function (req, res) {
         res.status(400).send({status: false, message: 'Full name is required'})
         return
     }
-
-    if(!isValid(logoLink)) {
-        res.status(400).send({status: false, message: 'Link is required'})
-        return
-    }
-
-   // Validation ends
+// Validation ends
     const collegeData = {name, fullName, logoLink}// to have only those fields into an object.
     const savedCollege = await CollegeModel.create(collegeData);
 
@@ -55,7 +44,7 @@ const getCollegeDetails = async function (req, res) {
             return res.status(400).send({ status: false, msg: "No query param received" });
         }
         if (!isValid(req.query.collegeName)) {
-            return res.status(400).send({ status: false, message: 'collegeName is required' })
+            return res.status(400).send({ status: false, message: 'In request query collegeName is required' })
         }
        const college = await CollegeModel.findOne({name:req.query.collegeName, isDeleted:false})
        if(!college){
@@ -64,16 +53,24 @@ const getCollegeDetails = async function (req, res) {
         const { name, fullName, logoLink } = college;
         const id = (college._id).toString()
         const interests = await internModel.find({ collegeId: id }).select({ name: 1, _id: 1, email:1, mobile:1 })
-        if(!interests){
-            return res.status(404).send({ status: false, message: "College data found successfully", data:"No student found who has appeared for Internship" })
+        if((Object.keys(interests).length > 0)){
+            const internfromcollege= {
+                name,
+                fullName,
+                logoLink,
+                interests: interests
+            }
+            res.status(201).send({ status: true, message: "College data found successfully", data: internfromcollege });
          }
-        const internfromcollege= {
-            name,
-            fullName,
-            logoLink,
-            interests: interests
-        }
-        res.status(201).send({ status: true, message: "College data found successfully", data: internfromcollege });
+         if(!(Object.keys(interests).length > 0)){
+            const internfromcollege= {
+                name,
+                fullName,
+                logoLink,
+                interests: "No student present for internship"
+            }
+            res.status(201).send({ status: true, message: "College data found successfully", data: internfromcollege });
+         }
     }
     catch (error) {
         res.status(500).send({ status: false, Errormsg: error.message })
