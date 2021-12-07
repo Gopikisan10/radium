@@ -67,18 +67,12 @@ const validUrl=function(req,res,next){
         if(arr.indexOf('radium')==-1){
             return res.status(400).send({status:false,msg:"radium is missing from the logolink"})
         }
-        
-        // const arr1=logo.split(".");
-        // if(!arr1.length - 1 == png || !arr1.length - 1 == jpg || !arr1.length - 1 == jpeg || !arr1.length - 1 == gif){
-        //     return res.status(400).send({msg: "extension is not valid"})
-        // }
-        
-        // const arr1=logo.split(".");
-        // if(["png","jpg","jpeg"].indexOf(arr1.length-1)!=-1){
-        //   //  return res.status(400).send({msg:"Image extension is not available" })
-        //   next()
-        // }
-        return next();
+
+        const arr1=logo.split(".");
+        if(!(["png","jpg","jpeg"].indexOf(arr1.length-1) > -1)){
+          return res.status(400).send({ status: false,msg:"Image extension is not available" })
+        }
+        return next()
     }  catch (error) {
         res.status(500).send({ status: false, Errormsg: error.message })
     }
