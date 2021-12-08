@@ -22,6 +22,11 @@ const createIntern = async function (req, res) {
         if (!validDetail(mobile)) {
             return res.status(400).send({ status: false, message: 'mobile is required' })
         }
+        const ismobileAlreadyUsed = await internModel.findOne({ mobile }); // {email: email} object shorthand property
+        if (ismobileAlreadyUsed) {
+            return res.status(400).send({ status: false, message: `${mobile} mobile number is already registered` })
+        }
+
         if (!validDetail(collegeName)) {
             return res.status(400).send({ status: false, message: 'collegeName is required' })
         }

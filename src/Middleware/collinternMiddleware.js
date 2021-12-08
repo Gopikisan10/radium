@@ -20,8 +20,9 @@ const validateEmail = function (req, res, next) {
             return next();
         }
         return res.status(401).send({ status:false, msg: "You have entered an invalid email address!"})
-    } catch {
-        res.status(500).send({ status:false, msg: "Invalid email-id" })
+    } catch (error) {
+        console.log({ ErrorIs: error.message })
+        res.status(500).send({ status: false, Errormsg: error.message })
     }
 }
 
@@ -38,10 +39,11 @@ const validateNumber = function (req, res, next) {
             return next();
         }
         return res.status(400).send({ status:false, msg: "Invalid mobile number" })
-    } catch {
-        res.status(500).send({ status:false, msg: "you enter wrong key"})
+    } catch (error) {
+        console.log({ ErrorIs: error.message })
+        res.status(500).send({ status: false, Errormsg: error.message })
     }
-}
+};
 
 const validUrl=function(req,res,next){
     try{
@@ -69,14 +71,15 @@ const validUrl=function(req,res,next){
         }
 
         const arr1=logo.split(".");
-        if(!(["png","jpg","jpeg"].indexOf(arr1.length-1) > -1)){
-          return res.status(400).send({ status: false,msg:"Image extension is not available" })
+        if(!(["png","jpg","jpeg"].indexOf(arr1[arr1.length-1]) > -1)){
+            return res.status(400).send({ status: false,msg:"Image extension is not available" })
         }
         return next()
-    }  catch (error) {
-        res.status(500).send({ status: false, Errormsg: error.message })
-    }
-};
+     } catch (error) {
+            console.log({ ErrorIs: error.message })
+            res.status(500).send({ status: false, Errormsg: error.message })
+        }
+    };
 
 module.exports.validateNumber = validateNumber
 module.exports.validateEmail = validateEmail

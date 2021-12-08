@@ -23,6 +23,11 @@ const createCollege = async function (req, res) {
         res.status(400).send({status: false, message: 'name is required'})
         return
     }
+    const uniqueCollege = await CollegeModel.findOne({name:name});
+   if(uniqueCollege) {
+        res.status(400).send({status: false, message: `college is already created with ${name} collegeName`})
+        return
+    }
 
     if(!isValid(fullName)) {
         res.status(400).send({status: false, message: 'Full name is required'})
@@ -52,7 +57,7 @@ const getCollegeDetails = async function (req, res) {
        }
         const { name, fullName, logoLink } = college;
         const id = (college._id).toString()
-        const interests = await internModel.find({ collegeId: id }).select({ name: 1, _id: 1, email:1, mobile:1 })
+        const interests = await internModel.find({ collegeId: id, isDeleted:false}).select({ name: 1, _id: 1, email:1, mobile:1 })
         if((Object.keys(interests).length > 0)){
             const internfromcollege= {
                 name,
@@ -60,7 +65,7 @@ const getCollegeDetails = async function (req, res) {
                 logoLink,
                 interests: interests
             }
-            res.status(201).send({ status: true, message: "College data found successfully", data: internfromcollege });
+            res.status(200).send({ status: true, message: "College data found successfully", data: internfromcollege });
          }
          if(!(Object.keys(interests).length > 0)){
             const internfromcollege= {
@@ -69,7 +74,7 @@ const getCollegeDetails = async function (req, res) {
                 logoLink,
                 interests: "No student present for internship"
             }
-            res.status(201).send({ status: true, message: "College data found successfully", data: internfromcollege });
+            res.status(200).send({ status: true, message: "College data found successfully", data: internfromcollege });
          }
     }
     catch (error) {
