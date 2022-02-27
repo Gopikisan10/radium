@@ -4,7 +4,7 @@ const customerModel = require("../Models/customerModel");
 
 const login = async function (req, res) {
     try {
-        let useremail = req.body.emailID
+        let useremail = req.body.emailID  
         let mobileNumber = req.body.mobileNumber
         if (useremail && mobileNumber) {
             let User = await customerModel.findOne({ emailID: useremail, mobileNumber: mobileNumber })
